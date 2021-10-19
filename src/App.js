@@ -45,6 +45,12 @@ class BooksApp extends React.Component {
   }
 
   render() {
+    const shelves = [
+      { title: 'Currently Reading', shelf: 'currentlyReading' },
+      { title: 'Want To Read', shelf: 'wantToRead' },
+      { title: 'Read', shelf: 'read' }
+    ];
+
     return (
       <div className="app">
           
@@ -59,26 +65,14 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                <BookShelf
-                  title={'Currently Reading'}
-                  shelf={'currentlyReading'}
-                  books={this.state.books}
-                  onUpdateShelf={this.updateShelf}
-                />
-
-                <BookShelf
-                  title={'Want to Read'}
-                  shelf={'wantToRead'}
-                  books={this.state.books}
-                  onUpdateShelf={this.updateShelf}
-                />
-
-                <BookShelf
-                  title={'Read'}
-                  shelf={'read'}
-                  books={this.state.books}
-                  onUpdateShelf={this.updateShelf}
-                />
+                {shelves.map((shelf) => (
+                  <BookShelf
+                    title={shelf.title}
+                    shelf={shelf.shelf}
+                    books={this.state.books}
+                    onUpdateShelf={this.updateShelf}
+                  />
+                ))}
               </div>
             </div>
             <div className="open-search">
