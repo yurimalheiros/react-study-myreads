@@ -12,7 +12,7 @@ class Search extends Component {
     const inputData = event.target.value
     this.setState({ query: inputData })
 
-    if (inputData) {
+    if (inputData.trim() !== "") {
       BooksAPI.search(inputData).then(res => {
         if (('error' in res)) {
           this.setState(currentState => ({
@@ -40,8 +40,8 @@ class Search extends Component {
   }
 
   getBookShelf = (bookId) => {
-    const books = this.props.books.filter((book) => book.id === bookId)
-    return books.length > 0 ? books[0].shelf : 'none'
+    const book = this.props.books.find((book) => book.id === bookId)
+    return book ? book.shelf : 'none'
   }
 
   render() {
@@ -61,7 +61,7 @@ class Search extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {this.state.result
+            {this.state.result.length > 0 ? this.state.result
               .map((book) => (
                 <li key={book.id}>
                   <Book
@@ -73,8 +73,8 @@ class Search extends Component {
                     onUpdateShelf={this.props.onUpdateShelf}
                   />
                 </li>
-              )
-              )}
+              ) )
+            : <div>No results</div>}
           </ol>
         </div>
       </div>
